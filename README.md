@@ -71,3 +71,4 @@ git config --global user.email "you@example.com"   # use your GitHub e-mail
 
 ## User interface
 Single-page UI with a table-and-seats motif, responsive layout, dark mode, keyboard focus styles and reduced-motion support. All element IDs used by the Selenium tests are unchanged. Layout previews are in `docs/ui-preview/` (rendered against a stand-in API, so replace them with real screenshots of your running app for Task 3).
+
