@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+title: "Automated Restaurant Table Reservation Platform"
+message: "If you use this project, please cite it as below."
+authors:
+  - name: "Prasana Shangloo"
+    alias: "23102A0076"
+type: software
+date-released: "2026-10-06"
+version: "1.0.0"
+license: MIT

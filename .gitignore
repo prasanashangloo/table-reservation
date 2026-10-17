@@ -1,0 +1,11 @@
+# Author/Owner: Prasana Shangloo (23102A0076)
+target/
+*.class
+*.log
+.idea/
+*.iml
+.vscode/
+.DS_Store
+.env
+*.retry
+ansible/*.vault
