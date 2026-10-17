@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="author" content="Prasana Shangloo (23102A0076)">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Table Reservation</title>
+  <style>
+    :root {
+      --paper: #eef2f0;
+      --surface: #ffffff;
+      --ink: #15231f;
+      --muted: #566761;
+      --rule: #c9d4d0;
+      --green: #0f4c45;
+      --on-green: #ffffff;
+      --green-tint: #dcece8;
+      --brass: #9a6a12;
+      --brass-tint: #f5e8c9;
+      --red: #a23b3b;
+      --red-tint: #f4dddd;
+      --focus: #b4811f;
+      --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+      --sans: "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --paper: #0e1a17;
+        --surface: #15231f;
+        --ink: #e8efec;
+        --muted: #9fb2ab;
+        --rule: #2c423d;
+        --green: #5cc2b3;
+        --on-green: #07201c;
+        --green-tint: #1a3a35;
+        --brass: #e3ae45;
+        --brass-tint: #3a2f14;
+        --red: #ee8a8a;
+        --red-tint: #3c2121;
+        --focus: #e3ae45;
+      }
+    }
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0; background: var(--paper); color: var(--ink);
+      font: 16px/1.5 var(--sans);
+    }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 0 20px 40px; }
+    :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+    header.top { padding: 22px 0 14px; border-bottom: 1px solid var(--rule); }
+    .brand { font: 600 22px/1.2 var(--serif); letter-spacing: 0.2px; margin: 0; }
+
+    #msg {
+      margin: 16px 0 0; padding: 10px 14px; min-height: 44px;
+      border-left: 4px solid var(--rule); background: var(--surface);
+      border-radius: 0 4px 4px 0;
+    }
+    #msg:empty { visibility: hidden; }
+    #msg.ok { border-left-color: var(--green); }
+    #msg.err { border-left-color: var(--red); background: var(--red-tint); }
+
+    h1, h2 { font-family: var(--serif); font-weight: 600; margin: 0; }
+    h1 { font-size: clamp(32px, 5vw, 52px); line-height: 1.1; max-width: 16ch; }
+    h2 { font-size: 24px; line-height: 1.25; }
+    .lede { color: var(--muted); max-width: 52ch; margin: 14px 0 0; font-size: 18px; }
+    .hidden { display: none !important; }
+    .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+    /* ---- logged-out ---- */
+    .hero { padding: 24px 0 26px; display: grid; gap: 28px; }
+    .hero-tables { display: flex; flex-wrap: wrap; gap: 22px 30px; align-items: flex-end; color: var(--green); }
+    .hero-tables figure { margin: 0; text-align: center; font-size: 13px; color: var(--muted); }
+    .hero-tables svg { display: block; margin: 0 auto 4px; }
+    .auth { display: grid; gap: 0; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--rule); }
+    .auth > div { padding: 26px 0 8px; }
+    .auth > div + div { padding-left: 32px; border-left: 1px solid var(--rule); }
+    .auth > div:first-child { padding-right: 32px; }
+    .field { display: grid; gap: 4px; margin: 14px 0 0; max-width: 360px; }
+    .field label { font-weight: 600; font-size: 14px; }
+    input, select {
+      font: inherit; color: inherit; background: var(--surface);
+      border: 1px solid var(--rule); border-radius: 4px; padding: 9px 11px; height: 44px;
+    }
+    input:hover, select:hover { border-color: var(--muted); }
+    button {
+      white-space: nowrap; font: inherit; cursor: pointer; border-radius: 4px; min-height: 42px; padding: 8px 18px;
+      border: 1px solid var(--green); background: var(--green); color: var(--on-green); font-weight: 600;
+    }
+    button:hover { filter: brightness(1.08); }
+    button.quiet { background: transparent; color: var(--green); }
+    .actions-row { margin-top: 18px; }
+
+    /* ---- logged-in ---- */
+    .whoami { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 16px 0 6px; }
+    .whoami p { margin: 0; }
+    .layout { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); gap: 0 40px; padding-top: 12px; }
+    .col h2 { padding: 12px 0 10px; border-bottom: 1px solid var(--rule); margin-bottom: 14px; }
+    .search { display: flex; flex-wrap: wrap; gap: 12px 14px; align-items: end; }
+    .search .field { margin: 0; max-width: none; }
+    #availability { margin-top: 18px; }
+    .empty { color: var(--muted); margin: 6px 0; }
+
+    .table-row {
+      display: grid; grid-template-columns: 76px 1fr; gap: 6px 14px; align-items: center;
+      padding: 14px 0; border-bottom: 1px solid var(--rule);
+    }
+    .table-row:last-child { border-bottom: 0; }
+    .glyph { color: var(--green); width: 76px; height: 76px; }
+    .table-meta { font-weight: 600; }
+    .table-meta span { color: var(--muted); font-weight: 400; margin-left: 8px; font-size: 14px; }
+    .slots { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    .slot-btn {
+      min-height: 38px; min-width: 58px; padding: 4px 8px; font-weight: 600;
+      background: var(--surface); color: var(--green); border: 1.5px solid var(--green);
+      font-variant-numeric: tabular-nums; transition: background .12s, color .12s;
+    }
+    .slot-btn:hover:not([disabled]) { background: var(--green); color: var(--on-green); filter: none; }
+    .slot-btn[disabled] {
+      cursor: not-allowed; color: var(--muted); border-color: var(--rule); background: transparent;
+      text-decoration: line-through; font-weight: 400;
+    }
+
+    table { border-collapse: collapse; width: 100%; }
+    th { text-align: left; font-size: 13px; color: var(--muted); font-weight: 600; padding: 0 8px 8px 0; }
+    td { padding: 12px 8px 12px 0; border-top: 1px solid var(--rule); vertical-align: top; }
+    td.what strong { display: block; }
+    td.what span { display: block; color: var(--muted); font-size: 14px; }
+    td.status span {
+      display: inline-flex; align-items: center; gap: 6px; padding: 2px 10px; border-radius: 999px;
+      font-size: 12px; font-weight: 700; letter-spacing: .3px;
+    }
+    td.status span::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+    .st-PENDING { color: var(--brass); background: var(--brass-tint); }
+    .st-CONFIRMED { color: var(--green); background: var(--green-tint); }
+    .st-CANCELLED { color: var(--red); background: var(--red-tint); }
+    td.actions { text-align: right; }
+    td.actions button { min-height: 34px; padding: 3px 12px; font-size: 14px; margin: 0 0 6px 6px; }
+    .cancel-btn { background: transparent; color: var(--red); border-color: var(--red); }
+    @keyframes flash { from { background: var(--brass-tint); } to { background: transparent; } }
+    tr.flash td { animation: flash 1.4s ease-out; }
+    @media (prefers-reduced-motion: reduce) { tr.flash td { animation: none; } .slot-btn { transition: none; } }
+
+    footer { margin-top: 36px; padding-top: 14px; border-top: 1px solid var(--rule); color: var(--muted); font-size: 13px; display: flex; flex-wrap: wrap; gap: 6px 22px; }
+
+    @media (max-width: 860px) {
+      .layout { grid-template-columns: 1fr; }
+      .col + .col { margin-top: 24px; }
+      .auth { grid-template-columns: 1fr; }
+      .auth > div + div { padding-left: 0; border-left: 0; border-top: 1px solid var(--rule); margin-top: 18px; }
+      .auth > div:first-child { padding-right: 0; }
+    }
+    @media (max-width: 560px) {
+      .table-row { grid-template-columns: 1fr; }
+      .glyph { width: 64px; height: 64px; }
+      thead { display: none; }
+      table, tbody, tr, td { display: block; width: 100%; }
+      tr.booking-row { border-top: 1px solid var(--rule); padding: 10px 0; }
+      td { border: 0; padding: 3px 0; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top"><p class="brand">Table Reservation</p></header>
+  <div id="msg" role="status" aria-live="polite"></div>
+
+  <main>
+    <section id="auth-section">
+      <div class="hero">
+        <h1>Reserve a table in a few taps.</h1>
+        <p class="lede">Create an account, pick a date and a time, and follow your booking until the table is confirmed.</p>
+        <div class="hero-tables" id="hero-tables" aria-hidden="true"></div>
+      </div>
+
+      <div class="auth">
+        <div>
+          <h2>Create an account</h2>
+          <div class="field"><label for="reg-name">Full name</label><input id="reg-name" autocomplete="name"></div>
+          <div class="field"><label for="reg-email">Email</label><input id="reg-email" type="email" autocomplete="email"></div>
+          <div class="field"><label for="reg-password">Password (6 or more characters)</label><input id="reg-password" type="password" autocomplete="new-password"></div>
+          <div class="actions-row"><button id="reg-btn">Create account</button></div>
+        </div>
+        <div>
+          <h2>Log in</h2>
+          <div class="field"><label for="login-email">Email</label><input id="login-email" type="email" autocomplete="email"></div>
+          <div class="field"><label for="login-password">Password</label><input id="login-password" type="password" autocomplete="current-password"></div>
+          <div class="actions-row"><button id="login-btn">Log in</button></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="app-section" class="hidden">
+      <div class="whoami">
+        <p>Signed in as <strong id="user-name"></strong></p>
+        <button id="logout-btn" class="quiet">Log out</button>
+      </div>
+
+      <div class="layout">
+        <div class="col">
+          <h2>Find a table</h2>
+          <div class="search">
+            <div class="field"><label for="date">Date</label><input id="date" type="date"></div>
+            <div class="field"><label for="party">Guests</label>
+              <select id="party">
+                <option>1</option><option selected>2</option><option>3</option><option>4</option>
+                <option>5</option><option>6</option><option>7</option><option>8</option>
+              </select>
+            </div>
+            <button id="check-btn">Check availability</button>
+          </div>
+          <div id="availability"><p class="empty">Choose a date and number of guests, then check availability. Selecting a free time books that table.</p></div>
+        </div>
+
+        <div class="col">
+          <h2>Your bookings</h2>
+          <p id="no-bookings" class="empty">You have no bookings yet. Pick a free time to make your first one.</p>
+          <table id="bookings-table" class="hidden">
+            <thead><tr><th>Booking</th><th>Status</th><th><span class="sr">Actions</span></th></tr></thead>
+            <tbody id="bookings-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>Environment: <span id="env">unknown</span></span>
+    <span>Version: <span id="ver">unknown</span></span>
+    <span>&copy; 2026 Prasana Shangloo (23102A0076)</span>
+  </footer>
+</div>
+
+<script>
+  // Relative URLs so the app works at "/" (java -jar, Docker) and "/reservation/" (Tomcat WAR).
+  const API = 'api';
+  let token = null;
+  let flashId = null;
+  const tableNames = {};
+  const $ = (id) => document.getElementById(id);
+
+  function show(message, ok) {
+    const el = $('msg');
+    el.textContent = message;
+    el.className = ok ? 'ok' : 'err';
+  }
+
+  async function call(path, method, body) {
+    const headers = { 'Content-Type': 'application/json' };
+    if (token) headers['X-Auth-Token'] = token;
+    const res = await fetch(`${API}/${path}`, { method, headers, body: body ? JSON.stringify(body) : undefined });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.error || `Request failed (${res.status})`);
+    return data;
+  }
+
+  function isoDate(d) {
+    const m = String(d.getMonth() + 1).padStart(2, '0'), day = String(d.getDate()).padStart(2, '0');
+    return `${d.getFullYear()}-${m}-${day}`;
+  }
+  function niceDate(iso) {
+    return new Date(iso + 'T00:00:00').toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short' });
+  }
+
+  // A table drawn from above: the round top scales with capacity, one dot per seat.
+  function glyph(capacity) {
+    const c = 42, r = 10 + capacity * 1.7, seatDist = r + 9;
+    let seats = '';
+    for (let i = 0; i < capacity; i++) {
+      const a = (2 * Math.PI * i) / capacity - Math.PI / 2;
+      seats += `<circle cx="${(c + seatDist * Math.cos(a)).toFixed(1)}" cy="${(c + seatDist * Math.sin(a)).toFixed(1)}" r="4.2" fill="none" stroke="currentColor" stroke-width="1.6"/>`;
+    }
+    return `<svg class="glyph" viewBox="0 0 84 84" role="img" aria-label="Table for ${capacity}"><circle cx="${c}" cy="${c}" r="${r.toFixed(1)}" fill="currentColor"/>${seats}</svg>`;
+  }
+
+  // ---- account ----
+  $('reg-btn').onclick = async () => {
+    try {
+      await call('users/register', 'POST', {
+        name: $('reg-name').value, email: $('reg-email').value, password: $('reg-password').value });
+      show('Registration successful. Please log in.', true);
+      $('login-email').value = $('reg-email').value;
+      $('login-password').focus();
+    } catch (e) { show(e.message, false); }
+  };
+
+  $('login-btn').onclick = async () => {
+    try {
+      const s = await call('users/login', 'POST', {
+        email: $('login-email').value, password: $('login-password').value });
+      token = s.token;
+      $('user-name').textContent = s.name;
+      $('auth-section').classList.add('hidden');
+      $('app-section').classList.remove('hidden');
+      show('Logged in.', true);
+      await loadBookings();
+    } catch (e) { show(e.message, false); }
+  };
+
+  $('logout-btn').onclick = () => {
+    token = null;
+    $('app-section').classList.add('hidden');
+    $('auth-section').classList.remove('hidden');
+    $('availability').innerHTML = '<p class="empty">Choose a date and number of guests, then check availability. Selecting a free time books that table.</p>';
+    $('login-password').value = '';
+    show('You have been logged out.', true);
+  };
+
+  // ---- availability ----
+  $('check-btn').onclick = () => loadAvailability(false);
+
+  async function loadAvailability(quiet) {
+    try {
+      const date = $('date').value;
+      if (!date) { show('Choose a date first.', false); return; }
+      const list = await call(`availability?date=${date}&partySize=${$('party').value}`, 'GET');
+      const box = $('availability');
+      box.innerHTML = '';
+      if (list.length === 0) {
+        box.innerHTML = '<p class="empty">No table seats that many guests. Try a smaller party.</p>';
+        return;
+      }
+      list.forEach(t => {
+        tableNames[t.tableId] = t.tableName;
+        const row = document.createElement('div');
+        row.className = 'table-row';
+        const g = document.createElement('div');
+        g.innerHTML = glyph(t.capacity);
+        const body = document.createElement('div');
+        const meta = document.createElement('div');
+        meta.className = 'table-meta';
+        meta.textContent = t.tableName;
+        const seats = document.createElement('span');
+        seats.textContent = `Seats ${t.capacity}`;
+        meta.appendChild(seats);
+        const slots = document.createElement('div');
+        slots.className = 'slots';
+        t.slots.forEach(s => {
+          const b = document.createElement('button');
+          b.className = 'slot-btn';
+          b.id = `slot-${t.tableId}-${s.slot.replace(':', '')}`;
+          b.textContent = s.slot;
+          b.disabled = !s.available;
+          b.title = s.available ? `Book ${t.tableName} at ${s.slot}` : 'Already booked';
+          b.onclick = () => book(t.tableId, date, s.slot);
+          slots.appendChild(b);
+        });
+        body.append(meta, slots);
+        row.append(g, body);
+        box.appendChild(row);
+      });
+      if (!quiet) show(`Showing availability for ${niceDate(date)}.`, true);
+    } catch (e) { show(e.message, false); }
+  }
+
+  async function book(tableId, date, slot) {
+    try {
+      const b = await call('bookings', 'POST', {
+        tableId, date, slot, partySize: parseInt($('party').value, 10) });
+      flashId = b.id;
+      show(`Booking #${b.id} requested (${b.status}).`, true);
+      await loadBookings();
+      await loadAvailability(true);
+    } catch (e) { show(e.message, false); }
+  }
+
+  async function act(id, action) {
+    try {
+      const b = await call(`bookings/${id}/${action}`, 'POST');
+      flashId = b.id;
+      show(`Booking #${b.id} is now ${b.status}.`, true);
+      await loadBookings();
+      if ($('availability').querySelector('.table-row')) await loadAvailability(true);
+    } catch (e) { show(e.message, false); }
+  }
+
+  // ---- bookings ----
+  function cell(cls, ...nodes) {
+    const td = document.createElement('td');
+    td.className = cls;
+    nodes.forEach(n => td.append(n));
+    return td;
+  }
+  function el(tag, cls, text) {
+    const e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text !== undefined) e.textContent = text;
+    return e;
+  }
+
+  async function loadBookings() {
+    const list = await call('bookings', 'GET');
+    const body = $('bookings-body');
+    body.innerHTML = '';
+    $('bookings-table').classList.toggle('hidden', list.length === 0);
+    $('no-bookings').classList.toggle('hidden', list.length !== 0);
+    list.forEach(b => {
+      const tr = el('tr', 'booking-row' + (b.id === flashId ? ' flash' : ''));
+      const what = cell('what', el('strong', '', tableNames[b.tableId] || `Table ${b.tableId}`),
+                                el('span', '', `${niceDate(b.bookingDate)} at ${b.slot}`),
+                                el('span', '', `${b.partySize} ${b.partySize === 1 ? 'guest' : 'guests'}, booking #${b.id}`));
+      const status = cell('status', el('span', 'st-' + b.status, b.status));
+      const actions = cell('actions');
+      if (b.status === 'PENDING') {
+        const c = el('button', 'confirm-btn', 'Confirm');
+        c.onclick = () => act(b.id, 'confirm');
+        actions.appendChild(c);
+      }
+      if (b.status !== 'CANCELLED') {
+        const x = el('button', 'cancel-btn', 'Cancel');
+        x.onclick = () => act(b.id, 'cancel');
+        actions.appendChild(x);
+      }
+      tr.append(what, status, actions);
+      body.appendChild(tr);
+    });
+  }
+
+  // ---- start-up ----
+  (async () => {
+    const today = new Date(), tomorrow = new Date();
+    tomorrow.setDate(today.getDate() + 1);
+    $('date').min = isoDate(today);
+    $('date').value = isoDate(tomorrow);
+    $('hero-tables').innerHTML = [2, 2, 4, 4, 6, 8]
+      .map(n => `<figure>${glyph(n)}<figcaption>${n} seats</figcaption></figure>`).join('');
+    try {
+      const h = await call('health', 'GET');
+      $('env').textContent = h.environment;
+      $('ver').textContent = h.version;
+    } catch (e) { /* footer keeps "unknown" */ }
+  })();
+</script>
+</body>
+</html>
