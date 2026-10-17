@@ -1,0 +1,7 @@
+.git
+src
+docs
+ansible
+*.md
+target/*
+!target/reservation.war

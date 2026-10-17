@@ -1,0 +1,34 @@
+# Author/Owner: Prasana Shangloo (23102A0076) | Copyright (c) 2026
+# Optional: run the app with MySQL for persistent data.
+#   mvn -B clean package -DskipTests && docker compose up --build
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: reservations
+      MYSQL_USER: reservation
+      MYSQL_PASSWORD: change-me
+      MYSQL_ROOT_PASSWORD: change-me-root
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-pchange-me-root"]
+      interval: 10s
+      retries: 10
+    volumes:
+      - dbdata:/var/lib/mysql
+
+  app:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      APP_ENV: dev
+      SPRING_PROFILES_ACTIVE: mysql
+      DB_HOST: db
+      DB_USER: reservation
+      DB_PASSWORD: change-me
+    ports:
+      - "8081:8080"
+
+volumes:
+  dbdata:
