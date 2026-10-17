@@ -1,0 +1,6 @@
+digraph G { layout=circo; graph [fontname="Helvetica", bgcolor="white", pad=0.3]; node [fontname="Helvetica", fontsize=12, style="filled,rounded", shape=box, fillcolor="#E3F4F3", color="#0E8F8A"]; edge [fontname="Helvetica", fontsize=10, color="#5B6675"];
+ plan [label="Plan\nbacklog, Kanban"]; code [label="Code\nfeature branch"]; pr [label="Pull request\nreview + merge"];
+ build [label="Build\nMaven"]; test [label="Test\nJUnit + Selenium gate", fillcolor="#FDE8C8", color="#C77D0A"];
+ rel [label="Release\nWAR, tag, Docker image"]; dep [label="Deploy\nTomcat / Docker"]; ops [label="Operate\nAnsible, health check"]; mon [label="Monitor\n/api/health, logs"];
+ plan->code->pr->build->test; test->rel [label="pass"]; test->code [label="fail", style=dashed, color="#B03030"];
+ rel->dep->ops->mon; mon->plan [style=dashed]; }

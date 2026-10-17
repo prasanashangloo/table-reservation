@@ -1,0 +1,8 @@
+digraph G { rankdir=TB; graph [fontname="Helvetica", bgcolor="white", pad=0.3]; node [fontname="Helvetica", fontsize=12, style="filled,rounded", shape=box, fillcolor="#E3F4F3", color="#0E8F8A"]; edge [fontname="Helvetica", fontsize=10, color="#5B6675"];
+ browser [label="Browser\nindex.html + JavaScript"];
+ ctl [label="Controllers\nUserController, BookingController, HealthController"];
+ svc [label="Services\nAuthService, BookingService"];
+ repo [label="Repositories\nSpring Data JPA"];
+ db [label="Database\nH2 (default) / MySQL (profile)", shape=cylinder];
+ rt [label="Runtime\nTomcat /reservation  or  Docker :8080", fillcolor="#F4F7FA", color="#1F2A44"];
+ browser->ctl [label="REST / JSON"]; ctl->svc->repo->db; ctl->rt [dir=none, style=dashed]; }

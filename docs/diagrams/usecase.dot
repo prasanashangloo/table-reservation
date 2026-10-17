@@ -1,0 +1,7 @@
+digraph G { rankdir=LR; graph [fontname="Helvetica", bgcolor="white", pad=0.3]; node [fontname="Helvetica", fontsize=12, style="filled,rounded", shape=box, fillcolor="#E3F4F3", color="#0E8F8A"]; edge [fontname="Helvetica", fontsize=10, color="#5B6675"];
+ d [label="Diner", shape=ellipse, fillcolor="#FDE8C8", color="#C77D0A"];
+ subgraph cluster_s { label="Table Reservation Platform"; fontname="Helvetica"; color="#1F2A44";
+  r [label="Register", shape=ellipse]; l [label="Log in", shape=ellipse]; a [label="View availability", shape=ellipse];
+  b [label="Request booking", shape=ellipse]; c [label="Confirm booking", shape=ellipse]; x [label="Cancel booking", shape=ellipse]; t [label="Track status", shape=ellipse]; }
+ d->r; d->l; d->a; d->b; d->c; d->x; d->t;
+ b->l [label="<<includes>>", style=dashed]; c->l [style=dashed]; x->l [style=dashed]; }

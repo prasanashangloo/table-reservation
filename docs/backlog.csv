@@ -1,0 +1,16 @@
+ID,Title,Story,Priority,Points,Sprint,Task,Status
+B1,Repo skeleton and health endpoint,US8,1,2,1,4,Done
+B2,Registration and login,US1;US2,2,3,1,5,Done
+B3,Availability view,US3,3,3,2,6,Done
+B4,Booking request with double-booking guard,US4,4,5,2,6,Done
+B5,Confirm and cancel,US5;US6,5,3,2,6,Done
+B6,My bookings and status tracking,US7,6,2,2,6,Done
+B7,Jenkins CI job,-,7,3,2,7,To do
+B8,Jenkinsfile and Tomcat deploy,-,8,3,2,8,To do
+B9,Selenium suite,-,9,5,2,9,Done
+B10,Selenium quality gate in Jenkins,-,10,3,2,10,To do
+B11,Dockerfile and lifecycle,-,11,2,3,11,To do
+B12,Jenkins to Docker CD,-,12,3,3,12,To do
+B13,Ansible provisioning,-,13,3,3,13,To do
+B14,Idempotency and rollback,-,14,3,3,14,To do
+B15,Final documentation and demo,-,15,3,3,15,To do

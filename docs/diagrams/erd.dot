@@ -1,0 +1,5 @@
+digraph G { rankdir=LR; graph [fontname="Helvetica", bgcolor="white", pad=0.3]; node [fontname="Helvetica", fontsize=12, style="filled,rounded", shape=box, fillcolor="#E3F4F3", color="#0E8F8A"]; edge [fontname="Helvetica", fontsize=10, color="#5B6675"]; node [shape=record];
+ u [label="{APP_USER|id PK\lname\lemail UK\lpasswordHash\l}"];
+ t [label="{RESTAURANT_TABLE|id PK\lname\lcapacity\l}"];
+ b [label="{BOOKING|id PK\luserId FK\ltableId FK\lbookingDate\lslot\lpartySize\lstatus\lcreatedAt\l}"];
+ u->b [label="1 : many"]; t->b [label="1 : many"]; }
