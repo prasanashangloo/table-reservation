@@ -5,7 +5,7 @@ B3,Availability view,US3,3,3,2,6,Done
 B4,Booking request with double-booking guard,US4,4,5,2,6,Done
 B5,Confirm and cancel,US5;US6,5,3,2,6,Done
 B6,My bookings and status tracking,US7,6,2,2,6,Done
-B7,Jenkins CI job,-,7,3,2,7,To do
+B7,Jenkins CI job,-,7,3,2,7,In progress
 B8,Jenkinsfile and Tomcat deploy,-,8,3,2,8,To do
 B9,Selenium suite,-,9,5,2,9,Done
 B10,Selenium quality gate in Jenkins,-,10,3,2,10,To do
