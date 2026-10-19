@@ -1,6 +1,7 @@
 // Author/Owner: Prasana Shangloo (23102A0076) | Copyright (c) 2026
-// Task 8 - Pipeline as code (Windows agent): Checkout -> Build -> Package -> Deploy to Tomcat.
-// Tests (Task 10) and Docker stages (Task 12) are added to this file in later tasks.
+// Tasks 8 and 10 - Pipeline as code (Windows agent):
+// Checkout -> Build -> Unit & API Tests -> Selenium UI Tests (quality gate) -> Package -> Deploy to Tomcat.
+// If a test fails, that stage fails and every later stage (Package, Deploy) is skipped.
 pipeline {
     agent any
 
@@ -34,6 +35,28 @@ pipeline {
             }
         }
 
+        stage('Unit & API Tests') {
+            steps {
+                bat '"%MVN%" -B test'
+            }
+            post {
+                always { junit allowEmptyResults: true, testResults: 'target/surefire-reports/*.xml' }
+            }
+        }
+
+        // Quality gate: if a Selenium journey fails, this stage fails and Package/Deploy never run.
+        stage('Selenium UI Tests') {
+            steps {
+                bat '"%MVN%" -B verify -Dheadless=true'
+            }
+            post {
+                always {
+                    junit allowEmptyResults: true, testResults: 'target/failsafe-reports/*.xml'
+                    archiveArtifacts artifacts: 'target/screenshots/*.png', allowEmptyArchive: true
+                }
+            }
+        }
+
         stage('Package') {
             steps {
                 bat '"%MVN%" -B package -DskipTests'
@@ -43,7 +66,6 @@ pipeline {
 
         stage('Deploy to Tomcat') {
             steps {
-                // Parameterised environment setting: written as a Tomcat context parameter, read by the app as APP_ENV
                 bat 'if not exist "%TOMCAT_HOME%\\conf\\Catalina\\localhost" mkdir "%TOMCAT_HOME%\\conf\\Catalina\\localhost"'
                 writeFile file: "${params.TOMCAT_HOME}\\conf\\Catalina\\localhost\\reservation.xml", text: """<?xml version="1.0" encoding="UTF-8"?>
 <Context>
@@ -51,7 +73,6 @@ pipeline {
 </Context>
 """
                 bat 'copy /Y target\\reservation.war "%TOMCAT_HOME%\\webapps\\reservation.war"'
-                // Wait until the new deployment answers with the requested environment
                 powershell '''
                     $url = "http://localhost:$($env:TOMCAT_PORT)/reservation/api/health"
                     for ($i = 0; $i -lt 40; $i++) {
@@ -70,6 +91,6 @@ pipeline {
 
     post {
         success { echo "Pipeline succeeded: build #${env.BUILD_NUMBER}, APP_ENV=${params.APP_ENV}, URL http://localhost:${params.TOMCAT_PORT}/reservation/" }
-        failure { echo 'Pipeline failed - see the stage that is red.' }
+        failure { echo 'Pipeline failed - deployment was skipped. Check the Test Result page and the screenshots.' }
     }
 }
