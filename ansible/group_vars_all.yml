@@ -5,13 +5,12 @@ app_group: reservation
 app_dir: /opt/reservation
 app_env: staging
 container_name: table-reservation
-image_repo: your-dockerhub-user/table-reservation
-image_tag: latest
-host_port: 8080
+image_repo: localhost:5000/table-reservation
+image_tag: "8"
+host_port: 8083
 container_port: 8080
 health_url: "http://localhost:{{ host_port }}/api/health"
 required_packages:
-  - docker.io
   - python3-docker
   - curl
   - ufw

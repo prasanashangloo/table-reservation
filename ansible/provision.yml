@@ -21,6 +21,12 @@
         name: "{{ app_group }}"
         state: present
 
+    - name: Ensure docker group exists
+      ansible.builtin.group:
+        name: docker
+        state: present
+        system: true
+
     - name: Create application user
       ansible.builtin.user:
         name: "{{ app_user }}"
@@ -48,11 +54,10 @@
           APP_ENV={{ app_env }}
           SERVER_PORT={{ container_port }}
 
-    - name: Ensure Docker service is enabled and running
-      ansible.builtin.service:
-        name: docker
-        state: started
-        enabled: true
+    - name: Check the Docker engine is reachable (provided by Docker Desktop in WSL)
+      ansible.builtin.command: docker info
+      register: docker_info
+      changed_when: false
 
     - name: Open the application port in ufw (rule is stored even if ufw is not enabled yet)
       community.general.ufw:

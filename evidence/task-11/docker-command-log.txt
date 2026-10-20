@@ -1,0 +1,133 @@
+=== Task 11 Docker command log - Prasana Shangloo 23102A0076 ===
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 893B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/eclipse-temurin:17-jre-alpine
+#2 ...
+
+#3 [auth] library/eclipse-temurin:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/eclipse-temurin:17-jre-alpine
+#2 DONE 5.9s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 107B 0.0s done
+#4 DONE 0.0s
+
+#5 [1/4] FROM docker.io/library/eclipse-temurin:17-jre-alpine@sha256:3c472129dc75a8d1d7a3f2df5b2093a8077e4493deff046754d4764d0371de63
+#5 resolve docker.io/library/eclipse-temurin:17-jre-alpine@sha256:3c472129dc75a8d1d7a3f2df5b2093a8077e4493deff046754d4764d0371de63 done
+#5 sha256:b13c582bc86c00d52360e98f37b00bc7f02ea3262b11f2e3ded435c6cb82b017 0B / 127B 0.2s
+#5 sha256:2b4bfbd732889dc44f84448164807969598d889b521a06a509bfa6f3149e8e0e 0B / 2.46kB 0.2s
+#5 sha256:647d5c102196b54d2dfccaa7f779a204eb9a388ded7e4053bcce16c387207fcf 0B / 47.19MB 0.2s
+#5 sha256:f67820664a14b831543f8a1c48f926e7d40bdb0f1f4e7a133d53e53559ccbd03 0B / 19.44MB 0.2s
+#5 sha256:b13c582bc86c00d52360e98f37b00bc7f02ea3262b11f2e3ded435c6cb82b017 127B / 127B 0.2s done
+#5 sha256:2b4bfbd732889dc44f84448164807969598d889b521a06a509bfa6f3149e8e0e 2.46kB / 2.46kB 0.4s done
+#5 sha256:647d5c102196b54d2dfccaa7f779a204eb9a388ded7e4053bcce16c387207fcf 4.19MB / 47.19MB 0.9s
+#5 sha256:f67820664a14b831543f8a1c48f926e7d40bdb0f1f4e7a133d53e53559ccbd03 1.05MB / 19.44MB 1.1s
+#5 sha256:f67820664a14b831543f8a1c48f926e7d40bdb0f1f4e7a133d53e53559ccbd03 2.10MB / 19.44MB 1.2s
+#5 sha256:647d5c102196b54d2dfccaa7f779a204eb9a388ded7e4053bcce16c387207fcf 7.34MB / 47.19MB 1.4s
+#5 sha256:f67820664a14b831543f8a1c48f926e7d40bdb0f1f4e7a133d53e53559ccbd03 3.15MB / 19.44MB 1.7s
+#5 sha256:647d5c102196b54d2dfccaa7f779a204eb9a388ded7e4053bcce16c387207fcf 10.49MB / 47.19MB 1.8s
+#5 sha256:f67820664a14b831543f8a1c48f926e7d40bdb0f1f4e7a133d53e53559ccbd03 4.19MB / 19.44MB 1.8s
+#5 sha256:f67820664a14b831543f8a1c48f926e7d40bdb0f1f4e7a133d53e53559ccbd03 5.24MB / 19.44MB 2.0s
+#5 sha256:647d5c102196b54d2dfccaa7f779a204eb9a388ded7e4053bcce16c387207fcf 13.63MB / 47.19MB 2.3s
+#5 sha256:f67820664a14b831543f8a1c48f926e7d40bdb0f1f4e7a133d53e53559ccbd03 6.29MB / 19.44MB 2.3s
+#5 sha256:f67820664a14b831543f8a1c48f926e7d40bdb0f1f4e7a133d53e53559ccbd03 7.34MB / 19.44MB 2.4s
+#5 sha256:f67820664a14b831543f8a1c48f926e7d40bdb0f1f4e7a133d53e53559ccbd03 8.39MB / 19.44MB 2.6s
+#5 sha256:f67820664a14b831543f8a1c48f926e7d40bdb0f1f4e7a133d53e53559ccbd03 9.44MB / 19.44MB 2.7s
+#5 ...
+
+#6 [internal] load build context
+#6 transferring context: 51.00MB 2.9s done
+#6 DONE 2.9s
+
+#5 [1/4] FROM docker.io/library/eclipse-temurin:17-jre-alpine@sha256:3c472129dc75a8d1d7a3f2df5b2093a8077e4493deff046754d4764d0371de63
+#5 sha256:647d5c102196b54d2dfccaa7f779a204eb9a388ded7e4053bcce16c387207fcf 16.78MB / 47.19MB 2.9s
+#5 sha256:f67820664a14b831543f8a1c48f926e7d40bdb0f1f4e7a133d53e53559ccbd03 10.49MB / 19.44MB 2.9s
+#5 sha256:f67820664a14b831543f8a1c48f926e7d40bdb0f1f4e7a133d53e53559ccbd03 11.53MB / 19.44MB 3.0s
+#5 sha256:f67820664a14b831543f8a1c48f926e7d40bdb0f1f4e7a133d53e53559ccbd03 12.58MB / 19.44MB 3.2s
+#5 sha256:f67820664a14b831543f8a1c48f926e7d40bdb0f1f4e7a133d53e53559ccbd03 13.63MB / 19.44MB 3.3s
+#5 sha256:647d5c102196b54d2dfccaa7f779a204eb9a388ded7e4053bcce16c387207fcf 19.92MB / 47.19MB 3.5s
+#5 sha256:f67820664a14b831543f8a1c48f926e7d40bdb0f1f4e7a133d53e53559ccbd03 14.68MB / 19.44MB 3.5s
+#5 sha256:f67820664a14b831543f8a1c48f926e7d40bdb0f1f4e7a133d53e53559ccbd03 15.73MB / 19.44MB 3.6s
+#5 sha256:f67820664a14b831543f8a1c48f926e7d40bdb0f1f4e7a133d53e53559ccbd03 16.78MB / 19.44MB 3.8s
+#5 sha256:f67820664a14b831543f8a1c48f926e7d40bdb0f1f4e7a133d53e53559ccbd03 17.83MB / 19.44MB 3.9s
+#5 sha256:f67820664a14b831543f8a1c48f926e7d40bdb0f1f4e7a133d53e53559ccbd03 19.44MB / 19.44MB 4.2s done
+#5 sha256:647d5c102196b54d2dfccaa7f779a204eb9a388ded7e4053bcce16c387207fcf 23.07MB / 47.19MB 4.2s
+#5 extracting sha256:f67820664a14b831543f8a1c48f926e7d40bdb0f1f4e7a133d53e53559ccbd03
+#5 sha256:647d5c102196b54d2dfccaa7f779a204eb9a388ded7e4053bcce16c387207fcf 26.21MB / 47.19MB 4.5s
+#5 extracting sha256:f67820664a14b831543f8a1c48f926e7d40bdb0f1f4e7a133d53e53559ccbd03 0.3s done
+#5 sha256:647d5c102196b54d2dfccaa7f779a204eb9a388ded7e4053bcce16c387207fcf 30.41MB / 47.19MB 4.8s
+#5 sha256:647d5c102196b54d2dfccaa7f779a204eb9a388ded7e4053bcce16c387207fcf 33.55MB / 47.19MB 5.1s
+#5 sha256:647d5c102196b54d2dfccaa7f779a204eb9a388ded7e4053bcce16c387207fcf 37.75MB / 47.19MB 5.4s
+#5 sha256:647d5c102196b54d2dfccaa7f779a204eb9a388ded7e4053bcce16c387207fcf 40.89MB / 47.19MB 5.7s
+#5 sha256:647d5c102196b54d2dfccaa7f779a204eb9a388ded7e4053bcce16c387207fcf 44.04MB / 47.19MB 6.0s
+#5 sha256:647d5c102196b54d2dfccaa7f779a204eb9a388ded7e4053bcce16c387207fcf 47.19MB / 47.19MB 6.3s done
+#5 extracting sha256:647d5c102196b54d2dfccaa7f779a204eb9a388ded7e4053bcce16c387207fcf
+#5 extracting sha256:647d5c102196b54d2dfccaa7f779a204eb9a388ded7e4053bcce16c387207fcf 0.5s done
+#5 DONE 6.8s
+
+#5 [1/4] FROM docker.io/library/eclipse-temurin:17-jre-alpine@sha256:3c472129dc75a8d1d7a3f2df5b2093a8077e4493deff046754d4764d0371de63
+#5 extracting sha256:b13c582bc86c00d52360e98f37b00bc7f02ea3262b11f2e3ded435c6cb82b017 done
+#5 extracting sha256:2b4bfbd732889dc44f84448164807969598d889b521a06a509bfa6f3149e8e0e done
+#5 DONE 6.9s
+
+#7 [2/4] RUN addgroup -S app && adduser -S app -G app
+#7 DONE 0.4s
+
+#8 [3/4] WORKDIR /opt/app
+#8 DONE 0.0s
+
+#9 [4/4] COPY target/reservation.war app.war
+#9 DONE 0.0s
+
+#10 exporting to image
+#10 exporting layers
+#10 exporting layers 0.9s done
+#10 exporting manifest sha256:25e7c146afd01b4924cafae2330dbf786586e21d01cda731ab6968f16005531f done
+#10 exporting config sha256:a79a522f5594c26054c9f782a547a3260ab29dc73fca9d819ebfa656ec894f75 done
+#10 exporting attestation manifest sha256:66efc3889ac6439bd7602082cb94ee88bb8409d01fc3b936efd04889efff0fae done
+#10 exporting manifest list sha256:5692da5e50e626bbfb09b5cd02ffb7919da8091e82cefcb2ad372455bb38e38b done
+#10 naming to docker.io/library/table-reservation:1.0 done
+#10 unpacking to docker.io/library/table-reservation:1.0
+#10 unpacking to docker.io/library/table-reservation:1.0 0.2s done
+#10 naming to docker.io/library/table-reservation:latest 0.0s done
+#10 unpacking to docker.io/library/table-reservation:latest done
+#10 DONE 1.1s
+WARNING: This output is designed for human readability. For machine-readable output, please use --format.
+IMAGE                      ID             DISK USAGE   CONTENT SIZE   EXTRA
+table-reservation:1.0      5692da5e50e6        362MB          116MB        
+table-reservation:latest   5692da5e50e6        362MB          116MB        
+Size: 116480983 bytes  User: app  Ports: map[8080/tcp:{}]
+383f714bf9618ec81ca6a4890ac8085c746535c86637339601222a33aa9a7690
+CONTAINER ID   IMAGE                   COMMAND               CREATED          STATUS                    PORTS                                         NAMES
+383f714bf961   table-reservation:1.0   "java -jar app.war"   24 seconds ago   Up 26 seconds (healthy)   0.0.0.0:8081->8080/tcp, [::]:8081->8080/tcp   tr
+2026-10-19T16:23:04.568Z  INFO 1 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-10-19T16:23:04.609Z  INFO 1 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-10-19T16:23:04.633Z  INFO 1 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-10-19T16:23:04.781Z  INFO 1 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-10-19T16:23:04.798Z  INFO 1 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-10-19T16:23:04.927Z  INFO 1 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:reservations user=SA
+2026-10-19T16:23:04.928Z  INFO 1 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-10-19T16:23:05.395Z  INFO 1 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-10-19T16:23:05.425Z  INFO 1 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-10-19T16:23:05.744Z  INFO 1 --- [           main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2026-10-19T16:23:06.059Z  INFO 1 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-10-19T16:23:06.071Z  INFO 1 --- [           main] c.e.reservation.ReservationApplication   : Started ReservationApplication in 3.007 seconds (process running for 3.367)
+2026-10-19T16:23:07.788Z  INFO 1 --- [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-10-19T16:23:07.788Z  INFO 1 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-10-19T16:23:07.789Z  INFO 1 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+{"version":"1.0.0","status":"UP","environment":"docker"}tr
+CONTAINER ID   IMAGE                   COMMAND               CREATED          STATUS                                PORTS     NAMES
+383f714bf961   table-reservation:1.0   "java -jar app.war"   47 seconds ago   Exited (143) Less than a second ago             tr
+tr
+{"status":"UP","version":"1.0.0","environment":"docker"}tr
+CONTAINER ID   NAME      CPU %     MEM USAGE / LIMIT     MEM %     NET I/O         BLOCK I/O   PIDS
+383f714bf961   tr        601.64%   282.4MiB / 7.607GiB   3.62%     1.17kB / 126B   0B / 0B     63
+tr
+tr
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES

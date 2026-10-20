@@ -19,6 +19,7 @@
         image: "{{ image_repo }}:{{ prev.content | b64decode | trim }}"
         state: started
         restart_policy: unless-stopped
+        image_name_mismatch: recreate
         env_file: "{{ app_dir }}/app.env"
         published_ports:
           - "{{ host_port }}:{{ container_port }}"
@@ -30,3 +31,9 @@
       until: health.status == 200
       retries: 15
       delay: 4
+
+    - name: Record the restored tag as the current stable release
+      ansible.builtin.copy:
+        dest: "{{ app_dir }}/current_tag"
+        content: "{{ prev.content | b64decode | trim }}\n"
+        mode: "0644"
